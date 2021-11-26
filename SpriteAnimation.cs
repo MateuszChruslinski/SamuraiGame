@@ -11,9 +11,9 @@ namespace SamuraiGame
         public Vector2 Origin;
         public float Rotation = 0f;
         public float Scale = 1f;
-        public SpriteEffects SpriteEffect;
+        public SpriteEffects SpriteEffect; 
         protected Rectangle[] Rectangles;
-        protected int FrameIndex = 0;
+        protected int FrameIndex = 0; 
 
         public SpriteManager(Texture2D Texture, int frames)
         {

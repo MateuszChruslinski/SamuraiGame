@@ -13,6 +13,8 @@ namespace SamuraiGame
         Right
     }
 
+    // Comment added for testing commit 
+
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
