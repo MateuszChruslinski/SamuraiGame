@@ -14,6 +14,9 @@ namespace SamuraiGame
     }
 
     // Comment added for testing commit 
+    // Comment added for testing commit 2
+    // Comment added for testing commit 3
+    //
 
     public class Game1 : Game
     {
