@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 
 namespace SamuraiGame
 {
@@ -60,6 +61,7 @@ namespace SamuraiGame
         Player player = new Player();
         Controller controller = new Controller();
 
+        List<Texture2D> spritesToMonster = new List<Texture2D>();
 
         public Game1()
         {
@@ -116,6 +118,12 @@ namespace SamuraiGame
             player.animations[1] = new SpriteAnimation(ninjaAnimUp, 4, 8);
             player.animations[2] = new SpriteAnimation(ninjaAnimLeft, 4, 8);
             player.animations[3] = new SpriteAnimation(ninjaAnimRight, 4, 8);
+
+            
+            spritesToMonster.Add(blueSkullAnim);
+            spritesToMonster.Add(purpleSkullAnim);
+            //spritesToMonster[0] = blueSkullAnim;
+            //spritesToMonster[1] = purpleSkullAnim;
         }
 
         protected override void Update(GameTime gameTime)
@@ -126,7 +134,7 @@ namespace SamuraiGame
             // Game timer
             // Upgrade player position
             player.Update(gameTime, controller.ingame);
-            controller.monsterUpdate(gameTime, blueSkullAnim, purpleSkullAnim);
+            controller.monsterUpdate(gameTime, spritesToMonster);
 
             // Upgrade dart position
             foreach (Dart proj in Dart.dart)

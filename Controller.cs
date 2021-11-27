@@ -16,15 +16,15 @@ namespace SamuraiGame
         public bool dead = false;
         MouseState mState;
 
-        public void monsterUpdate(GameTime gameTime, Texture2D spritesheet, Texture2D spritesheet2)
+        public void monsterUpdate(GameTime gameTime, List<Texture2D> spriteToMonster)
         {
             if (ingame == true)
             {
                 timer -= gameTime.ElapsedGameTime.TotalSeconds;
                 if (timer <= 0)
                 {
-                    monster.Add(new Monster1(spritesheet, spritesheet2));
-                    monster.Add(new Monster2(spritesheet, spritesheet2));
+                    monster.Add(new Monster1(spriteToMonster));
+                    monster.Add(new Monster2(spriteToMonster));
                     timer = 2;
                 }
             }

@@ -39,14 +39,14 @@ namespace SamuraiGame
         int randY;
 
 
-        public Monster1(Texture2D spritesheet, Texture2D spritesheet2)//
+        public Monster1(List<Texture2D> spriteToMonster)//
         {
             typeOfMonster = 1;
             monsterHp = 1;
             Random rand = new Random();
             radius = 64;
             speed = 1.5f;
-            anim = new SpriteAnimation(spritesheet, 4, 4);
+            anim = new SpriteAnimation(spriteToMonster[0], 4, 4);
 
             int helpX = rand.Next(0, 100);
             if (helpX >= 0 && helpX < 25)
@@ -80,14 +80,14 @@ namespace SamuraiGame
         int randX;
         int randY;
 
-        public Monster2(Texture2D spritesheet, Texture2D spritesheet2)
+        public Monster2(List<Texture2D> spriteToMonster)
         {
             typeOfMonster = 2;
             monsterHp = 2;
             Random rand = new Random();
             radius = 90;
             speed = 1;
-            anim = new SpriteAnimation(spritesheet2, 4, 4);
+            anim = new SpriteAnimation(spriteToMonster[1], 4, 4);
 
             int helpX = rand.Next(0, 100);
             if (helpX >= 0 && helpX < 25)
