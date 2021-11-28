@@ -25,6 +25,7 @@ namespace SamuraiGame
                 {
                     monster.Add(new Monster1(spriteToMonster));
                     monster.Add(new Monster2(spriteToMonster));
+                    monster.Add(new Monster3(spriteToMonster));
                     timer = 2;
                 }
             }

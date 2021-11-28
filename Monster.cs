@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+
 namespace SamuraiGame
 {
     class Monster
@@ -17,19 +18,33 @@ namespace SamuraiGame
         public int monsterHp;
         public SpriteAnimation anim;
 
+
         public void Update(GameTime gameTime)
         {
             anim.Update(gameTime);
         }
 
-        public void positionUpdate(GameTime gameTime, Vector2 playerPos, float speedMonster)
+        public void positionUpdate(GameTime gameTime, Vector2 playerPos, float speedMonster, int monsterType)
         {
-            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
 
-            Vector2 moveDir = playerPos - position;
-            moveDir.Normalize();
-            position += moveDir * speedMonster;
+            if (monsterType == 1 || monsterType == 2 )
+            {
+                float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Vector2 moveDir = playerPos - position;
+                moveDir.Normalize();
+                position += moveDir * speedMonster;
+            }
+
+            if (monsterType == 3)
+            {
+                float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Vector2 moveDir = playerPos - position;
+                moveDir.Normalize();
+                position += moveDir * speedMonster;
+            }
         }
+        
     }
 
 
@@ -115,4 +130,48 @@ namespace SamuraiGame
             position = new Vector2(randX, randY);
         }
     }
+
+    class Monster3 : Monster
+    {
+        int randX;
+        int randY;
+
+
+        public Monster3(List<Texture2D> spriteToMonster)//
+        {
+            typeOfMonster = 3;
+            monsterHp = 3;
+            Random rand = new Random();
+            radius = 64;
+            speed = 0.8f;
+            anim = new SpriteAnimation(spriteToMonster[2], 7, 4);
+
+            int helpX = rand.Next(0, 100);
+            if (helpX >= 0 && helpX < 25)
+            {
+                randX = rand.Next(-50, 1330);
+                randY = rand.Next(-100, -50);
+            }
+            if (helpX >= 25 && helpX < 50)
+            {
+                randX = rand.Next(-50, 1330);
+                randY = rand.Next(770, 820);
+            }
+
+            if (helpX >= 50 && helpX < 75)
+            {
+                randX = rand.Next(-100, -50);
+                randY = rand.Next(-50, 770);
+            }
+            if (helpX >= 75 && helpX < 100)
+            {
+                randX = rand.Next(1330, 1380);
+                randY = rand.Next(-50, 770);
+            }
+
+            position = new Vector2(randX, randY);
+
+        }
+    }
+
 }

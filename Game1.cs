@@ -50,6 +50,7 @@ namespace SamuraiGame
         //Monsters
         Texture2D blueSkullAnim;
         Texture2D purpleSkullAnim;
+        Texture2D oni;
 
         //Weapons and utilities elements
         Texture2D knife;
@@ -106,6 +107,7 @@ namespace SamuraiGame
             //Monsters
             blueSkullAnim = Content.Load<Texture2D>("Monsters/blueSkullAnim");
             purpleSkullAnim = Content.Load<Texture2D>("Monsters/purpleSkullAnim");
+            oni = Content.Load<Texture2D>("Monsters/oni");
 
             //Weapons and utilities elements
             knife = Content.Load<Texture2D>("Player/knife");
@@ -122,6 +124,7 @@ namespace SamuraiGame
             
             spritesToMonster.Add(blueSkullAnim);
             spritesToMonster.Add(purpleSkullAnim);
+            spritesToMonster.Add(oni);
             //spritesToMonster[0] = blueSkullAnim;
             //spritesToMonster[1] = purpleSkullAnim;
         }
@@ -145,7 +148,7 @@ namespace SamuraiGame
 
             for (int i = 0; i < controller.monster.Count; i++)
             {
-                controller.monster[i].positionUpdate(gameTime, player.Position, controller.monster[i].speed);
+                controller.monster[i].positionUpdate(gameTime, player.Position, controller.monster[i].speed, controller.monster[i].typeOfMonster);
             }
 
 
@@ -353,6 +356,30 @@ namespace SamuraiGame
                         {
                             _spriteBatch.Draw(heart, new Vector2(monst.position.X, monst.position.Y - 20), Color.White);
                             _spriteBatch.Draw(heartEmpty, new Vector2(monst.position.X + 22, monst.position.Y - 20), Color.White);
+                        }
+
+                        monst.anim.Draw(_spriteBatch, new Vector2(monst.position.X, monst.position.Y));
+                    }
+                    if (monst.typeOfMonster == 3)
+                    {
+                        monst.Update(gameTime);
+                        if (monst.monsterHp == 3)
+                        {
+                            _spriteBatch.Draw(heart, new Vector2(monst.position.X, monst.position.Y - 20), Color.White);
+                            _spriteBatch.Draw(heart, new Vector2(monst.position.X + 22, monst.position.Y - 20), Color.White);
+                            _spriteBatch.Draw(heart, new Vector2(monst.position.X + 44, monst.position.Y - 20), Color.White);
+                        }
+                        if (monst.monsterHp == 2)
+                        {
+                            _spriteBatch.Draw(heart, new Vector2(monst.position.X, monst.position.Y - 20), Color.White);
+                            _spriteBatch.Draw(heart, new Vector2(monst.position.X + 22, monst.position.Y - 20), Color.White);
+                            _spriteBatch.Draw(heartEmpty, new Vector2(monst.position.X + 44, monst.position.Y - 20), Color.White);
+                        }
+                        if (monst.monsterHp == 1)
+                        {
+                            _spriteBatch.Draw(heart, new Vector2(monst.position.X, monst.position.Y - 20), Color.White);
+                            _spriteBatch.Draw(heartEmpty, new Vector2(monst.position.X + 22, monst.position.Y - 20), Color.White);
+                            _spriteBatch.Draw(heartEmpty, new Vector2(monst.position.X + 44, monst.position.Y - 20), Color.White);
                         }
 
                         monst.anim.Draw(_spriteBatch, new Vector2(monst.position.X, monst.position.Y));
