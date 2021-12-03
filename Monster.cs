@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace SamuraiGame
 {
+
+
+
     class Monster
     {
         public Vector2 position;
@@ -17,7 +20,7 @@ namespace SamuraiGame
         public float speed;
         public int monsterHp;
         public SpriteAnimation anim;
-
+        double timer = 0;
 
         public void Update(GameTime gameTime)
         {
@@ -26,6 +29,7 @@ namespace SamuraiGame
 
         public void positionUpdate(GameTime gameTime, Vector2 playerPos, float speedMonster, int monsterType)
         {
+
             
 
             if (monsterType == 1 || monsterType == 2 )
@@ -38,13 +42,30 @@ namespace SamuraiGame
 
             if (monsterType == 3)
             {
+                timer -= gameTime.ElapsedGameTime.TotalSeconds;
                 float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                Vector2 moveDir = playerPos - position;
-                moveDir.Normalize();
-                position += moveDir * speedMonster;
+                float checkXDist = Math.Abs(Math.Abs(playerPos.X) - Math.Abs(position.X));
+                float checkYDist = Math.Abs(Math.Abs(playerPos.Y) - Math.Abs(position.Y));
+                int distanceOfEscape = 250;
+
+                if (checkXDist < distanceOfEscape && checkYDist < distanceOfEscape)
+                {
+                    timer = 2;
+                }
+                if (timer > 0)
+                {
+                    Vector2 moveDir = playerPos - position;
+                    moveDir.Normalize();
+                    position -= moveDir * speedMonster;
+                }
+                if (timer <= 0)
+                {
+                    Vector2 moveDir = playerPos - position;
+                    moveDir.Normalize();
+                    position += moveDir * speedMonster;
+                }
             }
         }
-        
     }
 
 
@@ -173,5 +194,6 @@ namespace SamuraiGame
 
         }
     }
+
 
 }
