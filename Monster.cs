@@ -22,6 +22,40 @@ namespace SamuraiGame
         public SpriteAnimation anim;
         double timer = 0;
 
+        public Vector2 createSpawnPoint()
+        {
+            int randX;
+            int randY;
+            Random rand = new Random();
+
+            int helpX = rand.Next(0, 100);
+            if (helpX >= 0 && helpX < 25)
+            {
+                randX = rand.Next(-50, 1330);
+                randY = rand.Next(-100, -50);
+            }
+            if (helpX >= 25 && helpX < 50)
+            {
+                randX = rand.Next(-50, 1330);
+                randY = rand.Next(770, 820);
+            }
+
+            if (helpX >= 50 && helpX < 75)
+            {
+                randX = rand.Next(-100, -50);
+                randY = rand.Next(-50, 770);
+            }
+            //if (helpX >= 75 && helpX < 100)
+            else
+            {
+                randX = rand.Next(1330, 1380);
+                randY = rand.Next(-50, 770);
+            }
+            Vector2 position;
+            position = new Vector2(randX, randY);
+            return position;
+        }
+
         public void Update(GameTime gameTime)
         {
             anim.Update(gameTime);
@@ -71,10 +105,6 @@ namespace SamuraiGame
 
     class Monster1 : Monster
     {
-        int randX;
-        int randY;
-
-
         public Monster1(List<Texture2D> spriteToMonster)//
         {
             typeOfMonster = 1;
@@ -83,39 +113,12 @@ namespace SamuraiGame
             radius = 64;
             speed = 1.5f;
             anim = new SpriteAnimation(spriteToMonster[0], 4, 4);
-
-            int helpX = rand.Next(0, 100);
-            if (helpX >= 0 && helpX < 25)
-            {
-                randX = rand.Next(-50, 1330);
-                randY = rand.Next(-100, -50);
-            }
-            if (helpX >= 25 && helpX < 50)
-            {
-                randX = rand.Next(-50, 1330);
-                randY = rand.Next(770, 820);
-            }
-
-            if (helpX >= 50 && helpX < 75)
-            {
-                randX = rand.Next(-100, -50);
-                randY = rand.Next(-50, 770);
-            }
-            if (helpX >= 75 && helpX < 100)
-            {
-                randX = rand.Next(1330, 1380);
-                randY = rand.Next(-50, 770);
-            }
-
-            position = new Vector2(randX, randY);
+            position = createSpawnPoint();
 
         }
     }
     class Monster2 : Monster
     {
-        int randX;
-        int randY;
-
         public Monster2(List<Texture2D> spriteToMonster)
         {
             typeOfMonster = 2;
@@ -124,40 +127,12 @@ namespace SamuraiGame
             radius = 90;
             speed = 1;
             anim = new SpriteAnimation(spriteToMonster[1], 4, 4);
-
-            int helpX = rand.Next(0, 100);
-            if (helpX >= 0 && helpX < 25)
-            {
-                randX = rand.Next(-50, 1330);
-                randY = rand.Next(-100, -50);
-            }
-            if (helpX >= 25 && helpX < 50)
-            {
-                randX = rand.Next(-50, 1330);
-                randY = rand.Next(770, 820);
-            }
-
-            if (helpX >= 50 && helpX < 75)
-            {
-                randX = rand.Next(-100, -50);
-                randY = rand.Next(-50, 770);
-            }
-            if (helpX >= 75 && helpX < 100)
-            {
-                randX = rand.Next(1330, 1380);
-                randY = rand.Next(-50, 770);
-            }
-
-            position = new Vector2(randX, randY);
+            position = createSpawnPoint();
         }
     }
 
     class Monster3 : Monster
     {
-        int randX;
-        int randY;
-
-
         public Monster3(List<Texture2D> spriteToMonster)//
         {
             typeOfMonster = 3;
@@ -166,33 +141,9 @@ namespace SamuraiGame
             radius = 64;
             speed = 0.8f;
             anim = new SpriteAnimation(spriteToMonster[2], 7, 4);
-
-            int helpX = rand.Next(0, 100);
-            if (helpX >= 0 && helpX < 25)
-            {
-                randX = rand.Next(-50, 1330);
-                randY = rand.Next(-100, -50);
-            }
-            if (helpX >= 25 && helpX < 50)
-            {
-                randX = rand.Next(-50, 1330);
-                randY = rand.Next(770, 820);
-            }
-
-            if (helpX >= 50 && helpX < 75)
-            {
-                randX = rand.Next(-100, -50);
-                randY = rand.Next(-50, 770);
-            }
-            if (helpX >= 75 && helpX < 100)
-            {
-                randX = rand.Next(1330, 1380);
-                randY = rand.Next(-50, 770);
-            }
-
-            position = new Vector2(randX, randY);
-
+            position = createSpawnPoint();
         }
+
     }
 
 
