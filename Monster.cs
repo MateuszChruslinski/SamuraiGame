@@ -21,6 +21,7 @@ namespace SamuraiGame
         public int monsterHp;
         public SpriteAnimation anim;
         double timer = 0;
+        public double eventTime;
 
         public Vector2 createSpawnPoint()
         {
@@ -34,13 +35,13 @@ namespace SamuraiGame
                 randX = rand.Next(-50, 1330);
                 randY = rand.Next(-100, -50);
             }
-            if (helpX >= 25 && helpX < 50)
+            else if (helpX >= 25 && helpX < 50)
             {
                 randX = rand.Next(-50, 1330);
                 randY = rand.Next(770, 820);
             }
 
-            if (helpX >= 50 && helpX < 75)
+            else if (helpX >= 50 && helpX < 75)
             {
                 randX = rand.Next(-100, -50);
                 randY = rand.Next(-50, 770);
@@ -142,7 +143,13 @@ namespace SamuraiGame
             speed = 0.8f;
             anim = new SpriteAnimation(spriteToMonster[2], 7, 4);
             position = createSpawnPoint();
+            eventTime = 2;
+
+
         }
+
+
+
 
     }
 

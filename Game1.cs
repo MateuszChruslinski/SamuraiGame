@@ -57,10 +57,12 @@ namespace SamuraiGame
         Texture2D dart;
         Texture2D heart;
         Texture2D heartEmpty;
+        Texture2D fireBallTexture;
 
         //Creating classes
         Player player = new Player();
         Controller controller = new Controller();
+        FireBall fireBall = new FireBall();
 
         List<Texture2D> spritesToMonster = new List<Texture2D>();
 
@@ -114,6 +116,7 @@ namespace SamuraiGame
             dart = Content.Load<Texture2D>("Player/dart");
             heart = Content.Load<Texture2D>("Player/heart");
             heartEmpty = Content.Load<Texture2D>("Player/heartEmpty");
+            fireBallTexture = Content.Load<Texture2D>("Monsters/fireBall");
 
             //Defining an player animations
             player.animations[0] = new SpriteAnimation(ninjaAnimDown, 4, 8);
@@ -139,6 +142,29 @@ namespace SamuraiGame
             player.Update(gameTime, controller.ingame);
             controller.monsterUpdate(gameTime, spritesToMonster);
 
+            
+            foreach (FireBall fireBall in controller.fireBall)
+            {
+                fireBall.fireBallPositionUpdate(gameTime); ///
+
+            }
+            
+            foreach (Monster monst in controller.monster)
+            {
+                if (monst.eventTime > 0)
+                {
+                    monst.eventTime -= gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else
+                {
+                    if (monst.typeOfMonster == 3)
+                    {
+                        controller.fireBallUpdate(gameTime, monst.position.X, monst.position.Y, player.Position.X, player.Position.Y);
+                        monst.eventTime = 2;
+                    }
+                }
+
+            }
             // Upgrade dart position
             foreach (Dart proj in Dart.dart)
             {
@@ -163,6 +189,7 @@ namespace SamuraiGame
                     controller.dead = true;
                     Dart.dart.Clear();
                     controller.monster.Clear();
+                    controller.fireBall.Clear();
                     player.Position = Player.defaultPosition; 
 
                     break;
@@ -232,6 +259,7 @@ namespace SamuraiGame
 
             controller.monster.RemoveAll(p => p.collided);
             Dart.dart.RemoveAll(p => p.collided);
+            controller.fireBall.RemoveAll(p => p.collided);
             base.Update(gameTime);
         }
 
@@ -252,6 +280,11 @@ namespace SamuraiGame
                 //Fonst Display
                 _spriteBatch.DrawString(gameFont, "Time: " + Math.Ceiling(player.TimeOfGame).ToString() + " Seconds", new Vector2(0, 0), Color.White);
                 _spriteBatch.DrawString(gameFont, "Score: " + (player.Score).ToString() + " Points", new Vector2(0, 25), Color.White);
+
+                for (int i = 0; i < controller.fireBall.Count; i++)
+                {
+                    _spriteBatch.Draw(fireBallTexture, new Vector2(controller.fireBall[i].position.X - controller.fireBall[i].radius, controller.fireBall[i].position.Y - controller.fireBall[i].radius), Color.White);
+                }
 
                 //Player Display
                 if (player.direction == Dir.Down)

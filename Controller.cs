@@ -10,11 +10,19 @@ namespace SamuraiGame
     class Controller
     {
         public List<Monster> monster = new List<Monster>();
-
         double timer = 2;
         public bool ingame = false;
         public bool dead = false;
         MouseState mState;
+
+        public List<FireBall> fireBall = new List<FireBall>(); //
+
+        /////
+        public void fireBallUpdate(GameTime gameTime, float positionX, float positionY, float playerX, float playerY)
+        {
+            fireBall.Add(new FireBall(300, positionX, positionY, playerX , playerY));
+        }
+        /////
 
         public void monsterUpdate(GameTime gameTime, List<Texture2D> spriteToMonster)
         {
@@ -26,7 +34,7 @@ namespace SamuraiGame
                     //monster.Add(new Monster1(spriteToMonster));
                     //monster.Add(new Monster2(spriteToMonster));
                     monster.Add(new Monster3(spriteToMonster));
-                    timer = 2;
+                    timer = 3;
                 }
             }
 
