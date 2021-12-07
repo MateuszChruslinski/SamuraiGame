@@ -17,12 +17,10 @@ namespace SamuraiGame
 
         public List<FireBall> fireBall = new List<FireBall>(); //
 
-        /////
         public void fireBallUpdate(GameTime gameTime, float positionX, float positionY, float playerX, float playerY)
         {
             fireBall.Add(new FireBall(300, positionX, positionY, playerX , playerY));
         }
-        /////
 
         public void monsterUpdate(GameTime gameTime, List<Texture2D> spriteToMonster)
         {

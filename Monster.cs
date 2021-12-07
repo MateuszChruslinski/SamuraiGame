@@ -143,7 +143,7 @@ namespace SamuraiGame
             speed = 0.8f;
             anim = new SpriteAnimation(spriteToMonster[2], 7, 4);
             position = createSpawnPoint();
-            eventTime = 2;
+            eventTime = 4;
 
 
         }

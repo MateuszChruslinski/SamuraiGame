@@ -14,11 +14,6 @@ namespace SamuraiGame
         Right
     }
 
-    // Comment added for testing commit 
-    // Comment added for testing commit 2
-    // Comment added for testing commit 3
-    //
-
     public class Game1 : Game
     {
         private GraphicsDeviceManager _graphics;
@@ -160,7 +155,7 @@ namespace SamuraiGame
                     if (monst.typeOfMonster == 3)
                     {
                         controller.fireBallUpdate(gameTime, monst.position.X, monst.position.Y, player.Position.X, player.Position.Y);
-                        monst.eventTime = 2;
+                        monst.eventTime = 4;
                     }
                 }
 
@@ -196,7 +191,24 @@ namespace SamuraiGame
 
                 }
             }
+            // Checking for fireBall collision
 
+            
+            foreach (FireBall fireBall in controller.fireBall)
+            {
+                float checkDist = Vector2.Distance(fireBall.position, player.Position + new Vector2(player.radious, player.radious));
+                if(checkDist < player.radious)
+                {
+                    controller.ingame = false;
+                    controller.dead = true;
+                    Dart.dart.Clear();
+                    controller.monster.Clear();
+                    controller.fireBall.Clear();
+                    player.Position = Player.defaultPosition;
+                    break;
+                }
+            }
+            
             /////////// Chcecking sword and monster collision
             foreach (Monster monst in controller.monster)
             {
@@ -368,7 +380,6 @@ namespace SamuraiGame
                     player.swordRelease = false;
                 }
 
-
                 foreach (Monster monst in controller.monster)
                 {
                     if (monst.typeOfMonster == 1)
@@ -450,7 +461,6 @@ namespace SamuraiGame
             }
 
             _spriteBatch.End();
-
             base.Draw(gameTime);
         }
 

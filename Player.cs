@@ -10,7 +10,6 @@ namespace SamuraiGame
     class Player
     {
 
-
         public bool swordRelease = false;
         public Dir direction = Dir.Down;
         private const int speed = 300;
@@ -130,7 +129,6 @@ namespace SamuraiGame
                         timer = 0.5f;
                     }
                 }
-                //
                 if (kState.IsKeyDown(Keys.W))
                 {
                     swordRelease = true;

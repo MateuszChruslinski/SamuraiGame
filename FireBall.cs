@@ -11,30 +11,28 @@ namespace SamuraiGame
     {
         public Vector2 position = new Vector2(600, 300);
         public int speed;
-        public int radius = 21;
+        public int radius = 10;
         public Vector2 direction;
-        //public bool helpVal;
         public bool collided = false;
-        //Vector2 sumOfAll;
+        Vector2 sumOfAll;
+
+        public int playerRadious = 48;
 
         public FireBall(int newSpeed = 300, float positionX = 100, float positionY = 100, float playerX =0, float playerY=0)
         {
             speed = newSpeed;
             position = new Vector2(positionX, positionY);
             direction = new Vector2(playerX, playerY);
-
-            //helpVal = true;
-            //double sinA = Math.Sin(direction.X - position.X / Math.Sqrt((direction.X - position.X) * (direction.X - position.X) + (direction.Y - position.Y) * (direction.Y - position.Y)));
-            //double cosA = Math.Cos(direction.Y - position.Y / Math.Sqrt((direction.X - position.X) * (direction.X - position.X) + (direction.Y - position.Y) * (direction.Y - position.Y)));
-            //sumOfAll = new Vector2((float)sinA, (float)cosA);
+            double sinA = (position.X - (direction.X + playerRadious)) / Math.Sqrt(Math.Abs(position.X - (direction.X + playerRadious)) * Math.Abs(position.X - (direction.X + playerRadious)) + Math.Abs(position.Y - (direction.Y + playerRadious)) * Math.Abs(position.Y - (direction.Y + playerRadious)));
+            double cosA = (position.Y - (direction.Y + playerRadious)) / Math.Sqrt(Math.Abs(position.X - (direction.X + playerRadious)) * Math.Abs(position.X - (direction.X + playerRadious)) + Math.Abs(position.Y - (direction.Y + playerRadious)) * Math.Abs(position.Y - (direction.Y + playerRadious)));
+            sumOfAll = new Vector2((float)sinA, (float)cosA);
         }
+
 
         public void fireBallPositionUpdate(GameTime gameTime)
         {
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector2 moveDir = direction - position;
-            moveDir = Vector2.Normalize(moveDir);
-            position += moveDir * speed * dt;
+            position -= sumOfAll * speed * dt;
 
         }
     }
