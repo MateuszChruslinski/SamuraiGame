@@ -31,6 +31,13 @@ namespace SamuraiGame
 
         public void fireBallPositionUpdate(GameTime gameTime)
         {
+            int addFrame = 50;
+            // Removing items from list, to restore memeory
+            if (position.X > 1280 + addFrame || position.X < 0 - addFrame || position.Y > 720 + addFrame || position.Y < 0 - addFrame)
+            {
+                collided = true;
+            }
+
             float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
             position -= sumOfAll * speed * dt;
 

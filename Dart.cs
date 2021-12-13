@@ -48,6 +48,14 @@ namespace SamuraiGame
             if (ingame == true)
             {
                 float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                // Removing items from list, to restore memeory
+                int addFrame = 50;
+                if(position.X > 1280 + addFrame || position.X < 0 - addFrame || position.Y > 720 + addFrame || position.Y < 0 - addFrame)
+                {
+                    collided = true;
+                }
+
                 switch (direction)
                 {
                     case Dir.Down:
