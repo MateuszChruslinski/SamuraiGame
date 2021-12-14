@@ -23,7 +23,12 @@ namespace SamuraiGame
         private int score = 0;
 
         public SpriteAnimation anim;
+        public SpriteAnimation swordAnim; //
         public SpriteAnimation[] animations = new SpriteAnimation[4];
+        public SpriteAnimation[] swordAnimations = new SpriteAnimation[4]; //
+
+        double timerOfActiveSword = 0;
+
 
         public Vector2 Position
         {
@@ -78,7 +83,7 @@ namespace SamuraiGame
                 if (activButton == true)
                 {
                     anim.Position = new Vector2(position.X - 48, position.Y - 48);
-                    anim.Update(gameTime);
+                    anim.Update(gameTime); ///
 
                     switch (direction)
                     {
@@ -129,10 +134,27 @@ namespace SamuraiGame
                         timer = 0.5f;
                     }
                 }
-                if (kState.IsKeyDown(Keys.W))
+
+
+                timerOfActiveSword -= gameTime.ElapsedGameTime.TotalSeconds;
+                if (kState.IsKeyDown(Keys.W) && timerOfActiveSword <= 0)
                 {
+                    swordAnim.Update(gameTime);
                     swordRelease = true;
+                    timerOfActiveSword = 1;
                 }
+                if(timerOfActiveSword > 0)
+                {
+                    swordAnim.Update(gameTime);
+                    swordRelease = true;
+                    timerOfActiveSword -= gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else
+                {
+                    swordRelease = false;
+                    swordAnim.setFrame(0);
+                }
+                
 
             }
         }

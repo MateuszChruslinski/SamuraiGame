@@ -19,8 +19,8 @@ namespace SamuraiGame
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         float rotation;
-        int vektorX;
-        int vektorY;
+        //int vektorX;
+        //int vektorY;
         float checkDist;
 
         // Fonts
@@ -41,6 +41,11 @@ namespace SamuraiGame
         Texture2D ninjaAnimDown;
         Texture2D ninjaAnimLeft;
         Texture2D ninjaAnimRight;
+        Texture2D attUp;
+        Texture2D attDown;
+        Texture2D attLeft;
+        Texture2D attRight;
+
 
         //Monsters
         Texture2D blueSkullAnim;
@@ -101,6 +106,11 @@ namespace SamuraiGame
             ninjaAnimLeft = Content.Load<Texture2D>("Player/ninjaLeft");
             ninjaAnimRight = Content.Load<Texture2D>("Player/ninjaRight");
 
+            attUp = Content.Load<Texture2D>("Player/attUp");
+            attDown = Content.Load<Texture2D>("Player/attDown");
+            attLeft = Content.Load<Texture2D>("Player/attLeft");
+            attRight = Content.Load<Texture2D>("Player/attRight");
+
             //Monsters
             blueSkullAnim = Content.Load<Texture2D>("Monsters/blueSkullAnim");
             purpleSkullAnim = Content.Load<Texture2D>("Monsters/purpleSkullAnim");
@@ -112,6 +122,7 @@ namespace SamuraiGame
             heart = Content.Load<Texture2D>("Player/heart");
             heartEmpty = Content.Load<Texture2D>("Player/heartEmpty");
             fireBallTexture = Content.Load<Texture2D>("Monsters/fireBall");
+            
 
             //Defining an player animations
             player.animations[0] = new SpriteAnimation(ninjaAnimDown, 4, 8);
@@ -119,7 +130,14 @@ namespace SamuraiGame
             player.animations[2] = new SpriteAnimation(ninjaAnimLeft, 4, 8);
             player.animations[3] = new SpriteAnimation(ninjaAnimRight, 4, 8);
 
-            
+            player.swordAnimations[0] = new SpriteAnimation(attDown, 6, 9);
+            player.swordAnimations[1] = new SpriteAnimation(attUp, 6, 9);
+            player.swordAnimations[2] = new SpriteAnimation(attLeft, 6, 9);
+            player.swordAnimations[3] = new SpriteAnimation(attRight, 6, 9);
+
+            player.anim = player.animations[0]; //
+            player.swordAnim = player.swordAnimations[0]; //
+
             spritesToMonster.Add(blueSkullAnim);
             spritesToMonster.Add(purpleSkullAnim);
             spritesToMonster.Add(oni);
@@ -212,20 +230,20 @@ namespace SamuraiGame
             /////////// Chcecking sword and monster collision
             foreach (Monster monst in controller.monster)
             {
-
+                int swordAddedRange = 60;
                 switch (player.direction) // 40 pix lenght of sword
                 {
                     case Dir.Right:
-                        checkDist = Vector2.Distance(monst.position, new Vector2(player.Position.X + 40, player.Position.Y));
+                        checkDist = Vector2.Distance(monst.position, new Vector2(player.Position.X + swordAddedRange + 35, player.Position.Y));
                         break;
                     case Dir.Left:
-                        checkDist = Vector2.Distance(monst.position, new Vector2(player.Position.X + -40, player.Position.Y));
+                        checkDist = Vector2.Distance(monst.position, new Vector2(player.Position.X + -swordAddedRange , player.Position.Y));
                         break;
                     case Dir.Up:
-                        checkDist = Vector2.Distance(monst.position, new Vector2(player.Position.X, player.Position.Y - 40));
+                        checkDist = Vector2.Distance(monst.position, new Vector2(player.Position.X, player.Position.Y - swordAddedRange));
                         break;
                     case Dir.Down:
-                        checkDist = Vector2.Distance(monst.position, new Vector2(player.Position.X, player.Position.Y + 40));
+                        checkDist = Vector2.Distance(monst.position, new Vector2(player.Position.X, player.Position.Y + swordAddedRange + 35));
                         break;
                 }
                 if (checkDist < monst.radius / 2 + 40 && player.swordRelease && true) //Lenght of sword
@@ -298,26 +316,60 @@ namespace SamuraiGame
                     _spriteBatch.Draw(fireBallTexture, new Vector2(controller.fireBall[i].position.X - controller.fireBall[i].radius, controller.fireBall[i].position.Y - controller.fireBall[i].radius), Color.White);
                 }
 
-                //Player Display
+
+
+
                 if (player.direction == Dir.Down)
                 {
-                    player.anim = player.animations[0];
-                    player.anim.Draw(_spriteBatch, new Vector2(player.Position.X, player.Position.Y));
+                    if (player.swordRelease)
+                    {
+                        player.swordAnim = player.swordAnimations[0];
+                        player.swordAnim.Draw(_spriteBatch, new Vector2(player.Position.X, player.Position.Y));
+                    }
+                    else
+                    {
+                        player.anim = player.animations[0];
+                        player.anim.Draw(_spriteBatch, new Vector2(player.Position.X, player.Position.Y));
+                    }
                 }
                 if (player.direction == Dir.Up)
                 {
-                    player.anim = player.animations[1];
-                    player.anim.Draw(_spriteBatch, new Vector2(player.Position.X, player.Position.Y));
+                    if (player.swordRelease)
+                    {
+                        player.swordAnim = player.swordAnimations[1];
+                        player.swordAnim.Draw(_spriteBatch, new Vector2(player.Position.X, player.Position.Y - 84 ));
+                    }
+                    else
+                    {
+                        player.anim = player.animations[1];
+                        player.anim.Draw(_spriteBatch, new Vector2(player.Position.X, player.Position.Y));
+                    }
                 }
                 if (player.direction == Dir.Left)
                 {
-                    player.anim = player.animations[2];
-                    player.anim.Draw(_spriteBatch, new Vector2(player.Position.X, player.Position.Y));
+                    if (player.swordRelease)
+                    {
+                        player.swordAnim = player.swordAnimations[2];
+                        player.swordAnim.Draw(_spriteBatch, new Vector2(player.Position.X - 84, player.Position.Y));
+                    }
+                    else
+                    {
+                        player.anim = player.animations[2];
+                        player.anim.Draw(_spriteBatch, new Vector2(player.Position.X, player.Position.Y));
+                    }
                 }
                 if (player.direction == Dir.Right)
                 {
-                    player.anim = player.animations[3];
-                    player.anim.Draw(_spriteBatch, new Vector2(player.Position.X, player.Position.Y));
+                    if (player.swordRelease)
+                    {
+                        player.swordAnim = player.swordAnimations[3];
+                        player.swordAnim.Draw(_spriteBatch, new Vector2(player.Position.X, player.Position.Y));
+                    }
+                    else
+                    {
+                        player.anim = player.animations[3];
+                        player.anim.Draw(_spriteBatch, new Vector2(player.Position.X, player.Position.Y));
+                    }
                 }
 
 
@@ -347,38 +399,6 @@ namespace SamuraiGame
                     _spriteBatch.Draw(dart, new Vector2(proj.Position.X + 48, proj.Position.Y + 48), null, Color.White, rotation, spriteOrigin, 1f, SpriteEffects.None, 0);
                 }
 
-                //Sword Display
-                if (player.swordRelease == true)
-                {
-                    Vector2 spriteOrigin;
-                    spriteOrigin = new Vector2(0, 0);
-
-                    switch (player.direction)
-                    {
-                        case Dir.Right:
-                            rotation = 0;
-                            vektorX = 48;
-                            vektorY = 48;
-                            break;
-                        case Dir.Down:
-                            rotation = 1.570796326795f;
-                            vektorX = 48 + 8;
-                            vektorY = 48;
-                            break;
-                        case Dir.Left:
-                            rotation = 3.14159265359f;
-                            vektorX = 48;
-                            vektorY = 48 + 16;
-                            break;
-                        case Dir.Up:
-                            rotation = 4.712388980385f;
-                            vektorX = 48 - 8;
-                            vektorY = 48;
-                            break;
-                    }
-                    _spriteBatch.Draw(knife, new Vector2(player.Position.X + vektorX, player.Position.Y + vektorY), null, Color.White, rotation, spriteOrigin, 1f, SpriteEffects.None, 0);
-                    player.swordRelease = false;
-                }
 
                 foreach (Monster monst in controller.monster)
                 {
